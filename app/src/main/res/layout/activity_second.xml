@@ -57,7 +57,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:text="Flask\n서버에서 가져오기"
+        android:text="결제하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button1"

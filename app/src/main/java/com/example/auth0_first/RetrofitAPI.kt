@@ -2,10 +2,7 @@ package com.example.auth0_first
 
 import com.google.gson.JsonObject
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface RetrofitAPI {
     @GET("/android") // 서버에 GET 요청을 할 주소
@@ -17,7 +14,7 @@ interface RetrofitPOST {
     @FormUrlEncoded
     @POST("/android2")
     fun dataTransfer(
-        @Field("menu") id : String,
+        @Field("menu") menu : String,
         @Field("cash") cash : String
-    ) : Call<DataModel.CashInfo>
+    ) : Call<JsonObject>
 }

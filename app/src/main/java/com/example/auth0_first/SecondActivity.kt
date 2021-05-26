@@ -29,7 +29,7 @@ class SecondActivity : AppCompatActivity() {
         lateinit var mRetrofitAPI: RetrofitAPI // Retrofit api Object
         lateinit var mCallTodoList : Call<JsonObject> // Json 데이터를 요청하는 Object
         lateinit var mRetrofitPOST: RetrofitPOST // Retrofit POST object
-        lateinit var mDataTransfer: Call<DataModel.CashInfo> // POST Json Data
+        lateinit var mDataTransfer: Call<JsonObject> // POST Json Data
 
         var button1 = findViewById<Button>(R.id.button1) as Button
         var progressBar = findViewById<ProgressBar>(R.id.progressBar) as ProgressBar
@@ -71,11 +71,11 @@ class SecondActivity : AppCompatActivity() {
                 Log.d(TAG, "결과는 => $result")
 
                 var mGson = Gson()
-                val dataParsed1 = mGson.fromJson(result, DataModel.TodoInfo1::class.java)
-                val dataParsed2 = mGson.fromJson(result, DataModel.TodoInfo2::class.java)
-                val dataParsed3 = mGson.fromJson(result, DataModel.TodoInfo3::class.java)
+//                val dataParsed1 = mGson.fromJson(result, DataModel.TodoInfo1::class.java)
+//                val dataParsed2 = mGson.fromJson(result, DataModel.TodoInfo2::class.java)
+//                val dataParsed3 = mGson.fromJson(result, DataModel.TodoInfo3::class.java)
 
-                textView.text = "해야할 일\n" + dataParsed1.todo1.task+"\n"+dataParsed2.todo2.task +"\n"+dataParsed3.todo3.task
+//                textView.text = "해야할 일\n" + dataParsed1.todo1.task+"\n"+dataParsed2.todo2.task +"\n"+dataParsed3.todo3.task
 
                 progressBar.visibility = View.GONE
                 button1.visibility = View.VISIBLE
@@ -83,22 +83,19 @@ class SecondActivity : AppCompatActivity() {
         })
 
         //POST 방식 Callback 함수
-        var mRetrofitPOSTCallback = (object : retrofit2.Callback<DataModel.CashInfo>{
-            override fun onFailure(call: Call<DataModel.CashInfo>?, t: Throwable?) {
+        var mRetrofitPOSTCallback = (object : retrofit2.Callback<JsonObject>{
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Log.e("retrofit Failure", t.toString())
             }
 
-            override fun onResponse(call: Call<DataModel.CashInfo>?, response: Response<DataModel.CashInfo>?) {
-                Log.d("retrofit Success", response?.body().toString())
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Log.d("retrofit Success", response.body().toString())
                 val result = response.body()
 
-                var mGson = Gson()
-                val dataParsed1 = mGson.fromJson(result, DataModel.TodoInfo1::class.java)
-                val dataParsed2 = mGson.fromJson(result, DataModel.TodoInfo2::class.java)
-                val dataParsed3 = mGson.fromJson(result, DataModel.TodoInfo3::class.java)
+                val dataParsed1 = Gson().fromJson(result, DataModel.MenuInfo::class.java)
+                val dataParsed2 = Gson().fromJson(result, DataModel.CashInfo::class.java)
 
-                textView.text = "해야할 일\n" + dataParsed1.todo1.task+"\n"+dataParsed2.todo2.task +"\n"+dataParsed3.todo3.task
-
+                textView.text = "Menu: " + dataParsed1.menu + "\n" + "Cash: " + dataParsed2.cash
                 progressBar.visibility = View.GONE
                 button1.visibility = View.VISIBLE
             }
