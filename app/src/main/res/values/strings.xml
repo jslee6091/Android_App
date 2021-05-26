@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Auth0_first</string>
+    <string name="baseUrl">http://99.81.100.188:5000</string>
+</resources>
